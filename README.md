@@ -1,2 +1,2 @@
 # PythonScrapyBasicSetup
-Basic setup with random user agents and IP addresses for Python Scrapy Framework
+Basic setup with random user agents and proxy addresses for Python Scrapy Framework

@@ -7,6 +7,7 @@ import sys,os.path
 sys.path.append('/spiders/')
 from spiders.proxies import ProxiesSpider
 from spiders.iptester import IPTesterSpider
+from spiders.uatester import UATesterSpider
 
 configure_logging()
 # importing project settings for further usage
@@ -18,6 +19,7 @@ runner = CrawlerRunner(settings)
 @defer.inlineCallbacks
 def crawl():
 	yield runner.crawl(IPTesterSpider)
+	yield runner.crawl(UATesterSpider)
 	reactor.stop()
 
 crawl()

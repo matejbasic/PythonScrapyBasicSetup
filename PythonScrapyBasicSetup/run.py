@@ -6,7 +6,7 @@ from scrapy.utils.project import get_project_settings
 import sys,os.path
 sys.path.append('/spiders/')
 from spiders.proxies import ProxiesSpider
-from spiders.tester import TesterSpider
+from spiders.iptester import IPTesterSpider
 
 configure_logging()
 # importing project settings for further usage
@@ -17,7 +17,7 @@ runner = CrawlerRunner(settings)
 # running spiders sequentially (non-distributed)
 @defer.inlineCallbacks
 def crawl():
-	yield runner.crawl(TesterSpider)
+	yield runner.crawl(IPTesterSpider)
 	reactor.stop()
 
 crawl()

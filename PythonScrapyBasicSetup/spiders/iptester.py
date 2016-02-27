@@ -5,8 +5,8 @@ import scrapy
 import logging
 from bs4 import BeautifulSoup
 
-class TesterSpider(scrapy.Spider):
-    name = "tester"
+class IPTesterSpider(scrapy.Spider):
+    name = "IPtester"
     allowed_domains = ["whatismyipaddress.com"]
     start_urls = (
         'http://www.whatismyipaddress.com/',

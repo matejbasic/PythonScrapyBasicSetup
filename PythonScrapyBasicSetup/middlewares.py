@@ -13,7 +13,6 @@ class ProxyMiddleware(object):
 	proxies = []
 
 	def __init__(self, *args, **kwargs):
-		logging.info("Proxy Middleware")
 		fin = urllib2.urlopen('http://proxylist.hidemyass.com/search-1311281')
 		soup = BeautifulSoup(fin, 'html.parser')
 		# get the table with proxy addresses 
@@ -33,6 +32,7 @@ class ProxyMiddleware(object):
 			# if everything is scraped/defined, save to proxies list
 			if 'ip_address' and 'port' and 'protocol' in item:
 				self.proxies.append(item)
+
 		fin.close()
 
 	def get_ip(self, td):
@@ -69,16 +69,20 @@ class ProxyMiddleware(object):
 		proxy = request.meta['proxy']
 		print('Removing failed proxy <%s>, %d proxies left' % (proxy, len(self.proxies)))
 		try:
-			del self.proxies[proxy]
+			i = 0;
+			for el in self.proxies:
+				if el['address'] == proxy:
+					del self.proxies[i]
+					break
+				i += 1
 		except ValueError:
 			pass
-		print self.proxies
 
 class RandomUserAgentMiddleware(object):
 
 	settings = get_project_settings()
 
-	def __init__(self, *args, **kwargs):         
+	def __init__(self, *args, **kwargs):
 		xmldoc = minidom.parse(urllib2.urlopen('http://techpatterns.com/downloads/firefox/useragentswitcher.xml'))
 		item_list = xmldoc.getElementsByTagName('useragent')
             

@@ -16,7 +16,7 @@ class IPTesterSpider(scrapy.Spider):
     	soup = BeautifulSoup(response.body, 'html.parser')
 
         ip_container = soup.select('#section_left > div:nth-of-type(2) > a:nth-of-type(1)')
-        if (len(ip_container) > 0):
+        if len(ip_container) > 0:
             try:
                 ip_container = ip_container[0].encode('UTF-8')
                 ip = BeautifulSoup(ip_container, 'html.parser').get_text()

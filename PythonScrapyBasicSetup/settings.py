@@ -32,6 +32,6 @@ COOKIES_ENABLED = False
 # downloader middlewares
 DOWNLOADER_MIDDLEWARES = {
 	'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-	'PythonScrapyBasicSetup.middlewares.RandomUserAgentMiddleware': 400,
-    'PythonScrapyBasicSetup.middlewares.ProxyMiddleware': 410
+	'PythonScrapyBasicSetup.middlewares.user_agent.RandomUserAgentMiddleware': 400,
+    'PythonScrapyBasicSetup.middlewares.proxy.HttpProxyMiddleware': 410
 }

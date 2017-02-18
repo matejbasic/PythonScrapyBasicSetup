@@ -7,20 +7,16 @@ from bs4 import BeautifulSoup
 
 class IPTesterSpider(scrapy.Spider):
     name = 'IPtester'
-    allowed_domains = ['whatismyipaddress.com']
+    allowed_domains = ['icanhazip.com']
     start_urls = (
-        'http://whatismyipaddress.com/',
+        'https://icanhazip.com',
     )
 
     def parse(self, response):
     	soup = BeautifulSoup(response.body, 'html.parser')
-
-        ip_container = soup.select('#section_left > div:nth-of-type(2) > a:nth-of-type(1)')
-        if len(ip_container) > 0:
-            try:
-                ip_container = ip_container[0].encode('UTF-8')
-                ip = BeautifulSoup(ip_container, 'html.parser').get_text()
-                logging.info('IP ADDRESS = %s' % ip)
-            except (RuntimeError, IndexError):
-                logging.info('IP ADDRESS NOT FOUND')
+        ip_address = soup.get_text().rstrip('\n')
+        if len(ip_address) > 0:
+            logging.info('IP ADDRESS = %s' % ip_address)
+        else:
+            logging.info('IP ADDRESS NOT FOUND')
         pass

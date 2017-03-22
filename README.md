@@ -1,7 +1,7 @@
 # PythonScrapyBasicSetup
 Basic setup with random user agents and proxy addresses for [Python Scrapy Framework](http://scrapy.org/).
 
-####Setup
+### Setup
 1. Install Scrapy Framework
 
   ```
@@ -47,7 +47,7 @@ If you get some errors regarding the pyOpenSSL (check this [issue](https://githu
   pip install Twisted==16.4.1
   ```
 
-####Usage
+### Usage
 To see what it does just:
   ```
   python run.py

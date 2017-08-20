@@ -1,20 +1,21 @@
 # PythonScrapyBasicSetup
 Basic setup with random user agents and proxy addresses for [Python Scrapy Framework](http://scrapy.org/).
 
-####Setup
-1. Install Scrapy Framework
+### Setup
+##### 1. Install Scrapy Framework
 
   ```
   pip install Scrapy
   ```
   [Detailed installation guide](https://doc.scrapy.org/en/1.3/intro/install.html)
-2. Install [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup) for proxy middleware based on hidemyass lists
+
+##### 2. Install [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup) for proxy middleware based on hidemyass lists
 
   ```
   pip install beautifulsoup4
   ```
   [Detailed installation guide](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup)
-3. Install [Tor](https://www.torproject.org/), [Stem](https://stem.torproject.org/) (controller library for Tor), and [Privoxy](https://www.privoxy.org/) (HTTP proxy server).
+##### 3. Install [Tor](https://www.torproject.org/), [Stem](https://stem.torproject.org/) (controller library for Tor), and [Privoxy](https://www.privoxy.org/) (HTTP proxy server).
 
   ```
   apt-get install tor python-stem privoxy
@@ -47,7 +48,7 @@ If you get some errors regarding the pyOpenSSL (check this [issue](https://githu
   pip install Twisted==16.4.1
   ```
 
-####Usage
+### Usage
 To see what it does just:
   ```
   python run.py

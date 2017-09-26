@@ -7,14 +7,13 @@ from bs4 import BeautifulSoup
 
 class UATesterSpider(scrapy.Spider):
     name = 'UAtester'
-    allowed_domains = ['user-agent.me']
+    allowed_domains = ['whatsmyuseragent.org']
     start_urls = (
-        'http://user-agent.me',
+        'http://whatsmyuseragent.org/',
     )
 
     def parse(self, response):
-    	soup = BeautifulSoup(response.body, 'html.parser')
-        ua_container = soup.select('small')[0].encode('UTF-8')
-        ua = BeautifulSoup(ua_container, 'html.parser').get_text()
+        soup = BeautifulSoup(response.body, 'html.parser')
+        ua = soup.p.text
         logging.info('USER AGENT = %s' % ua)
         pass

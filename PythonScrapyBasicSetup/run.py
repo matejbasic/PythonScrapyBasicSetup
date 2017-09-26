@@ -5,6 +5,7 @@ from scrapy.utils.project import get_project_settings
 
 import sys,os.path
 sys.path.append('/spiders/')
+
 from spiders.iptester import IPTesterSpider
 from spiders.uatester import UATesterSpider
 

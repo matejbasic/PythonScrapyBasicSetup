@@ -1,16 +1,11 @@
-import urllib2
-from bs4 import BeautifulSoup
-from xml.dom import minidom
 import random
-from scrapy.utils.project import get_project_settings
 import logging
-
-import getpass
-import stem
-import stem.connection
+import urllib2
 from stem import Signal
 from stem.control import Controller
-
+from bs4 import BeautifulSoup
+from scrapy.utils.project import get_project_settings
+from scrapy.http import HtmlResponse
 
 class TorProxyMiddleware(object):
 
@@ -48,48 +43,33 @@ class HttpProxyMiddleware(object):
 		self.query_proxies()
 
 	def query_proxies(self):
-		request = urllib2.urlopen('http://proxylist.hidemyass.com/search-1311281')
+		request = urllib2.urlopen('https://www.proxydocker.com/search?port=8080&type=HTTP&anonymity=All&country=All&city=All')
+
 		if request.getcode() == 200:
 			soup = BeautifulSoup(request, 'html.parser')
-			# get the table with proxy addresses
-			data_grid = soup.find('table', id='listable')
 
+			# get the table with proxy addresses
+			data_grid = soup.find_all('tr')
 			max_proxies = 100
 			# iterate through the rows
-			for tr in data_grid.tbody.findAll('tr'):
+			for tr in data_grid:
 				i = 0
 				item = {}
 				for td in tr.findAll('td'):
-					if i == 1: # ip address
-						item['address'] = self.get_ip(td)
-					elif i == 2:
-						item['port'] = td.get_text().strip()
-					elif i == 6:
-						item['protocol'] = td.get_text().lower().strip()
+					if i == 0: # ip address & port
+						item['address'] = td.text.strip()
+					elif i == 1:
+						item['protocol'] = td.text.lower().strip()
+						break
 					i += 1
+
 				# if everything is scraped/defined, save to proxies list
-				if 'ip_address' and 'port' and 'protocol' in item:
+				if 'address' and 'protocol' in item:
 					self.proxies.append(item)
 					max_proxies -= 1
 					if max_proxies < 1:
 						break
 		request.close()
-
-	def get_ip(self, td):
-		# getting ip address is a little bit tricky but this solution
-		# is simple and fast, for more info check
-		# https://blueshellgroup.wordpress.com/2013/04/15/creating-a-private-database-of-proxies-part-2/
-		span = td.find('span')
-		styles = str(span.find('style')).split('.')
-		for k in range(1, len(styles)):
-			style = styles[k].split('{')
-			if 'none' in style[1]:
-				[s.extract() for s in span('span', { 'class' : style[0] })]
-
-		[s.extract() for s in span('style')]
-		[s.extract() for s in span(['span', 'div'], style='display:none')]
-
-		return span.get_text().replace('\n', '').replace('\t', '').strip()
 
 	@classmethod
 	def from_crawler(cls, crawler):
@@ -98,7 +78,7 @@ class HttpProxyMiddleware(object):
 
 	def process_request(self, request, spider):
 		item = random.choice(self.proxies)
-		request.meta['proxy'] = item['protocol'] + '://' + item['address'] + ':' + item['port']
+		request.meta['proxy'] = item['protocol'] + '://' + item['address']
 		logging.info('Using proxy: %s' % request.meta['proxy'])
 
 	def remove_failed_proxy(self, request, spider):

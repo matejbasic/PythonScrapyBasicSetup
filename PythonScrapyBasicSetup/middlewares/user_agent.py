@@ -1,23 +1,19 @@
-from scrapy.utils.project import get_project_settings
-from xml.dom import minidom
-import urllib2
 import random
+from xml.dom import minidom
+from scrapy.utils.project import get_project_settings
 
 class RandomUserAgentMiddleware(object):
-	settings = get_project_settings()
+    settings = get_project_settings()
+    source_path = 'data/user_agents.xml'
 
-	def __init__(self, *args, **kwargs):
-		# print 'RandomUserAgentMiddleware'
-		xmldoc = minidom.parse(urllib2.urlopen('http://techpatterns.com/downloads/firefox/useragentswitcher.xml'))
-		item_list = xmldoc.getElementsByTagName('useragent')
+    def __init__(self, *args, **kwargs):
+        xmldoc = minidom.parse(self.source_path)
+        items = xmldoc.getElementsByTagName('useragent')
+        user_agents = [item.attributes['value'].value for item in items]
 
-		user_agents = []
-		for s in item_list:
-			user_agents.append(s.attributes['useragent'].value)
+        self.settings.set('USER_AGENT_LIST', user_agents)
 
-		self.settings.set('USER_AGENT_LIST', user_agents)
-
-	def process_request(self, request, spider):
-		ua = random.choice(self.settings.get('USER_AGENT_LIST'))
-		if ua:
-			request.headers.setdefault('User-Agent', ua)
+    def process_request(self, request, spider):
+        user_agent = random.choice(self.settings.get('USER_AGENT_LIST'))
+        if user_agent:
+            request.headers.setdefault('User-Agent', user_agent)

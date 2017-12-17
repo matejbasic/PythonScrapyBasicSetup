@@ -9,7 +9,7 @@ Basic setup with random user agents and proxy addresses for [Python Scrapy Frame
   ```
   [Detailed installation guide](https://doc.scrapy.org/en/1.3/intro/install.html)
 
-##### 2. Install [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup) for proxy middleware based on hidemyass lists
+##### 2. Install [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup) for proxy middleware based on proxydocker lists
 
   ```
   pip install beautifulsoup4

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # just for ip address testing purposes
 
-import scrapy
 import logging
+import scrapy
 from bs4 import BeautifulSoup
 
 class IPTesterSpider(scrapy.Spider):
@@ -13,10 +13,9 @@ class IPTesterSpider(scrapy.Spider):
     )
 
     def parse(self, response):
-    	soup = BeautifulSoup(response.body, 'html.parser')
+        soup = BeautifulSoup(response.body, 'html.parser')
         ip_address = soup.get_text().rstrip('\n')
-        if len(ip_address) > 0:
-            logging.info('IP ADDRESS = %s' % ip_address)
+        if ip_address:
+            logging.info('IP ADDRESS = %s', ip_address)
         else:
             logging.info('IP ADDRESS NOT FOUND')
-        pass

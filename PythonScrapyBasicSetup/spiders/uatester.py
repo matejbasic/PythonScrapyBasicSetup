@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # just for user agent testing purposes
 
-import scrapy
 import logging
+import scrapy
 from bs4 import BeautifulSoup
 
 class UATesterSpider(scrapy.Spider):
@@ -14,6 +14,8 @@ class UATesterSpider(scrapy.Spider):
 
     def parse(self, response):
         soup = BeautifulSoup(response.body, 'html.parser')
-        ua = soup.p.text
-        logging.info('USER AGENT = %s' % ua)
-        pass
+        user_agent = soup.p.text
+        if user_agent:
+            logging.info('USER AGENT = %s', user_agent)
+        else:
+            logging.info('USER AGENT NOT FOUND')

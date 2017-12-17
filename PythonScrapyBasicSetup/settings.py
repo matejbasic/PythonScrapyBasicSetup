@@ -39,8 +39,8 @@ MAX_REQ_PER_IP = 1000
 
 # downloader middlewares
 DOWNLOADER_MIDDLEWARES = {
-	'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-	'PythonScrapyBasicSetup.middlewares.user_agent.RandomUserAgentMiddleware': 400,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'PythonScrapyBasicSetup.middlewares.user_agent.RandomUserAgentMiddleware': 400,
     # 'PythonScrapyBasicSetup.middlewares.proxy.HttpProxyMiddleware': 410,
-	'PythonScrapyBasicSetup.middlewares.proxy.TorProxyMiddleware': 410
+    'PythonScrapyBasicSetup.middlewares.proxy.TorProxyMiddleware': 410
 }

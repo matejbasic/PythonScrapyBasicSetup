@@ -33,6 +33,11 @@ COOKIES_ENABLED = False
 HTTP_PROXY = 'http://127.0.0.1:8118'
 AUTH_PASSWORD = 'secretPassword'
 CONTROL_PORT = 9051
+
+# if defined, it will force exit nodes to be from given country/countries
+# http://www.b3rn3d.com/blog/2014/03/05/tor-country-codes/
+# EXIT_NODES = '{br}'
+
 # number of HTTTP request before the IP change
 # delete or set to None if you don't want to use it
 MAX_REQ_PER_IP = 1000

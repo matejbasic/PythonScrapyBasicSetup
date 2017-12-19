@@ -25,6 +25,13 @@ class TorProxyMiddleware(object):
         self.control_port = settings['CONTROL_PORT']
         self.max_req_per_ip = settings['MAX_REQ_PER_IP']
 
+        self.exit_nodes = settings['EXIT_NODES']
+        if self.exit_nodes:
+            with Controller.from_port(port=self.control_port) as controller:
+                controller.authenticate(self.password)
+                controller.set_conf('ExitNodes', self.exit_nodes)
+                controller.close()
+
     def process_request(self, request, spider):
         self.req_counter += 1
         if self.max_req_per_ip is not None and self.req_counter > self.max_req_per_ip:
